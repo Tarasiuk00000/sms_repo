@@ -5,7 +5,8 @@ import {
   FaCommentAlt,
   FaPhoneAlt,
   FaCalendarAlt,
-  FaCog
+  FaCog,
+  FaWaveSquare
 } from "react-icons/fa";
 
 const breakpoints = {
@@ -88,7 +89,8 @@ const Menu = ({ activeIndex, onMenuClick }) => {
     { id: 2, icon: <FaCommentAlt />, label: "SMS" },
     { id: 3, icon: <FaPhoneAlt />, label: "Call Logs" },
     { id: 4, icon: <FaCalendarAlt />, label: "Schedule" },
-    { id: 5, icon: <FaCog />, label: "Settings" }
+    { id: 5, icon: <FaWaveSquare />, label: "Campaign" },
+    { id: 6, icon: <FaCog />, label: "Settings" }
   ];
 
   return (

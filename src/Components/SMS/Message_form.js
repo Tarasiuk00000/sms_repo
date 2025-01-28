@@ -13,27 +13,30 @@ const breakpoints = {
 const MessageFo = styled.input`
   border-radius: 10px;
   background-color: rgba(0, 163, 154, 0.1);
-  margin-top: 45%;
+  margin-top: 43%;
   margin-left: 10px;
-  width: 65%;
+  width: 53%;
   height: 35px;
   position: absolute;
   padding-left: 15px; /* Adds 10px of space at the start of the input */
 
   @media (max-width: ${breakpoints.laptop}) {
-    margin-top: 55%;
+    margin-top: 52%;
   }
 
   @media (max-width: ${breakpoints.desktop}) {
-    margin-top: 78%;
+    margin-top: 73%;
+    width: 51%;
   }
 
   @media (max-width: ${breakpoints.tablet}) {
-    margin-top: 103%;
-    width: 62%;
+    margin-top: 98%;
+    width: 51%;
   }
 
   @media (max-width: ${breakpoints.mobile}) {
+    margin-top: 87vh;
+    width: 70%;
   }
 
   @media (max-width: ${breakpoints.mobileS}) {
@@ -46,24 +49,27 @@ const SendMsgIcon = styled.button`
   background-size: 30px 30px; /* Set the size of the image */
   background-repeat: no-repeat;
   width: 35px;
-  margin: 867px 66%;
+  margin: 825px 54%;
   height: 35px;
   position: absolute;
 
   @media (max-width: ${breakpoints.laptop}) {
-    margin-top: 55%;
+    margin-top: 52%;
   }
 
   @media (max-width: ${breakpoints.desktop}) {
-    margin-top: 78%;
+    margin-top: 73%;
+    margin-left: 53%;
   }
 
   @media (max-width: ${breakpoints.tablet}) {
-    margin-top: 103%;
-    margin-left: 64%;
+    margin-top: 98%;
+    margin-left: 55%;
   }
 
   @media (max-width: ${breakpoints.mobile}) {
+    margin-top: 87vh;
+    margin-left: 75%;
   }
 
   @media (max-width: ${breakpoints.mobileS}) {

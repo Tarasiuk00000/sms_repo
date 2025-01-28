@@ -27,6 +27,7 @@ const Table = styled.table`
   }
 
   @media (max-width: ${breakpoints.mobile}) {
+    margin-left: 1px;
   }
 
   @media (max-width: ${breakpoints.mobileS}) {
@@ -127,8 +128,8 @@ const AddButton = styled.button`
     position: relative;
   }
 
-  @media (max-width: ${breakpoints.mobileS}) {
-    margin-left: 120px;
+  @media (max-width: ${breakpoints.mobile}) {
+    margin-left: 20px;
   }
 `;
 

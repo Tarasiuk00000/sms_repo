@@ -28,6 +28,7 @@ const Table = styled.table`
   }
 
   @media (max-width: ${breakpoints.mobile}) {
+    margin-left: 5px;
   }
 
   @media (max-width: ${breakpoints.mobileS}) {
@@ -140,9 +141,6 @@ const TableComponentCallLog = ({ data }) => {
           <TableHeader>Person</TableHeader>
           <TableHeader>Number</TableHeader>
           <TableHeader>Start Time</TableHeader>
-          <TableHeader>Duration</TableHeader>
-          <TableHeader>Price</TableHeader>
-          <TableHeader>Price Unit</TableHeader>
           <TableHeader>State</TableHeader>
         </tr>
       </thead>
@@ -165,21 +163,12 @@ const TableComponentCallLog = ({ data }) => {
               {row.start}
             </TableCell>
             <TableCell>
-              {row.duration}
-            </TableCell>
-            <TableCell>
-              {row.price}
-            </TableCell>
-            <TableCell>
-              {row.unit}
-            </TableCell>
-            <TableCell>
               {ActiveIcon({ index: row.state })}
             </TableCell>
           </TableRow>
         )}
         <TableRow>
-          <TableFooter colSpan={7} />
+          <TableFooter colSpan={4} />
         </TableRow>
       </tbody>
     </Table>

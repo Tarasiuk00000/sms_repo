@@ -7,6 +7,14 @@ import AddCampaignModel from "./Add_campaign_model";
 import RemoveModelOpen from "./Remove_campaign";
 import axios from "axios";
 
+const breakpoints = {
+  mobileS: "320px",
+  mobile: "480px",
+  tablet: "768px",
+  desktop: "1024px",
+  laptop: "1440px"
+};
+
 const localizer = momentLocalizer(moment);
 
 const ScheduleCalendar = () => {
@@ -16,6 +24,7 @@ const ScheduleCalendar = () => {
   const [selectedDate, setSelectToday] = useState(new Date());
   const [events, setEvents] = useState([{}]);
   const [savedEvent, setGetedEvent] = useState([{}]);
+  const [msgTemplateData, setMsgTemplateData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,8 +63,22 @@ const ScheduleCalendar = () => {
       }
     };
 
+    const fetchMsgData = async () => {
+      try {
+        // Send a GET request to the backend when the site loads
+        const response = await axios.get(
+          process.env.REACT_APP_API + "/message/template/get"
+        );
+        setMsgTemplateData(response.data); // Update the state with the returned data
+      } catch (error) {
+        alert("Error fetching data:", error.message);
+      } finally {
+      }
+    };
+
     fetchData();
     fetchScheduleData();
+    fetchMsgData();
   }, []); // Empty dependency array ensures it runs only once on mount
 
   const closeModal = () => {
@@ -93,7 +116,7 @@ const ScheduleCalendar = () => {
   const setScheduleCampaign = ({
     selectedOption,
     selectedTime,
-    inputValue
+    selectedMsg
   }) => {
     setIsModalOpen(false);
     // Create a new event
@@ -112,7 +135,7 @@ const ScheduleCalendar = () => {
 
     const newEvent = {
       title: selectedOption, // Assuming selectedOptions is an array
-      message: inputValue,
+      message: selectedMsg,
       start: startDate, // Assuming selectedTime is a valid date/time string
       end: endDate
     };
@@ -128,7 +151,7 @@ const ScheduleCalendar = () => {
           process.env.REACT_APP_API + "/api/schedule/save",
           {
             group: selectedOption,
-            msg: inputValue,
+            msg: selectedMsg,
             time: startDate
           }
         );
@@ -157,6 +180,7 @@ const ScheduleCalendar = () => {
       </div>
       <AddCampaignModel
         groupData={data}
+        msgData={msgTemplateData}
         isOpen={isModalOpen}
         close={closeModal}
         selectOptions={setScheduleCampaign}

@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+const breakpoints = {
+  mobileS: "320px",
+  mobile: "480px",
+  tablet: "768px",
+  desktop: "1024px",
+  laptop: "1440px"
+};
+
 const Tab = styled.div`
   float: left;
-  height: 90%;
+  height: 88vh;
   margin-top: 73px;
   width: 100%;
   overflow-y: auto;
-
   &::-webkit-scrollbar {
     display: none;
   }

@@ -5,12 +5,22 @@ import UserMenu from "../Components/SMS/User_menu";
 import MessageForm from "../Components/SMS/Message_form";
 import ChatLog from "../Components/SMS/Chat_log";
 import axios from "axios";
+import Previus from "../Assects/previus.svg";
 
 const RightSide = styled.div`
   display: flex;
   background-color: #ffffff;
-  height: 931px;
+  height: 100vh;
   width: 100%;
+`;
+
+const PreviusButton = styled.div`
+  background-image: url(${Previus}); /* Path to your image */
+  background-repeat: no-repeat;
+  background-size: 30px 30px; /* Set the size of the image */
+  width: 30%;
+  height: 30px;
+  position: absolute;
 `;
 
 const UserPan = styled.div`
@@ -28,7 +38,7 @@ const ChatPan = styled.div`
   background-color: rgba(0, 163, 154, 0.1);
   border-radius: 10px;
   float: right;
-  width: 120%;
+  width: 75%;
   height: 98%;
   margin: 1%;
 `;
@@ -38,27 +48,10 @@ const SMS = () => {
   const [groupData, setGroupData] = useState([]);
   const [chatData, setChatData] = useState([]);
   const [userPhone, setUserPhone] = useState(-1);
+  const [isMobile, setIsMobile] = useState(false); // Check if mobile environment
+  const [showRightSidebar, setShowRightSidebar] = useState(false); // Toggle between sidebars
 
-  // // Establish WebSocket connection when component mounts
-  // useEffect(() => {
-  //   const mySocket = io("http://localhost:5000"); // URL of your backend WebSocket server
-
-  //   // Handle incoming messages
-  //   mySocket.on("receive_sms_twilio", data => {
-  //     // setChatData(prevMessages => [
-  //     //   ...prevMessages,
-  //     //   { sender: data.sender, message: data.message }
-  //     // ]);
-  //   });
-
-  //   setSocket(mySocket);
-
-  //   // Cleanup on component unmount
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
-
+  // Handle window resize to detect mobile environment
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -73,8 +66,12 @@ const SMS = () => {
       } finally {
       }
     };
-
     fetchData();
+
+    const handleResize = () => setIsMobile(window.innerWidth <= 425);
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []); // Empty dependency array ensures it runs only once on mount
 
   const onClickButton = async ({ id, phone }) => {
@@ -89,6 +86,8 @@ const SMS = () => {
       alert("Error fetching data:", error);
     } finally {
     }
+
+    setShowRightSidebar(true);
   };
 
   const setChatString = ({ inputValue }) => {
@@ -133,14 +132,38 @@ const SMS = () => {
   return (
     <main>
       <RightSide>
-        <UserPan>
-          <SearchSMS searchHint={searchData} />
-          <UserMenu menuItems={data} rowClick={onClickButton} />
-        </UserPan>
-        <ChatPan>
-          <ChatLog chatData={chatData} />
-          <MessageForm changeValue={setChatString} />
-        </ChatPan>
+        {(!isMobile || !showRightSidebar) &&
+          <UserPan
+            style={{
+              width: isMobile ? "100%" : "30%",
+              display: isMobile && showRightSidebar ? "none" : "block"
+            }}
+          >
+            <SearchSMS searchHint={searchData} />
+            <UserMenu menuItems={data} rowClick={onClickButton} />
+          </UserPan>}
+
+        {(!isMobile || showRightSidebar) &&
+          <ChatPan
+            style={{
+              flex: 1,
+              padding: "10px",
+              display: isMobile && !showRightSidebar ? "none" : "block"
+            }}
+          >
+            <button
+              onClick={() => setShowRightSidebar(false)}
+              style={{
+                flex: 1,
+                padding: "10px",
+                color: isMobile ? "black" : "rgba(0, 255, 85, 0.1)"
+              }}
+            >
+              Back To Menu
+            </button>
+            <ChatLog chatData={chatData} />
+            <MessageForm changeValue={setChatString} />
+          </ChatPan>}
       </RightSide>
     </main>
   );

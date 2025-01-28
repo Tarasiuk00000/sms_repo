@@ -30,3 +30,26 @@
     background-color: #5dfc9f !important;
   }
   
+  /* Hide unused parts (optional) */
+@media (max-width: 1024px) {
+  /* Override the calendar background color */
+  .rbc-calendar {
+    width: 700px!important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Override the calendar background color */
+  .rbc-calendar {
+    width: 600px!important;
+    margin-left: 50px!important;
+  }
+}
+
+@media (max-width: 425px) {
+  /* Override the calendar background color */
+  .rbc-calendar {
+    width: 90%!important;    
+    margin: auto!important;
+  }
+}

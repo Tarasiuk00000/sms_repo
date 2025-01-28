@@ -46,30 +46,22 @@ const Select = styled.select`
   }
 `;
 
-const TimeInput = styled.input`
+const TimeSelect = styled.select`
   padding: 8px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 300px;
   margin-bottom: 10px;
+  width: 45%;
   &:focus {
     outline: none;
     border-color: #007bff;
   }
 `;
 
-const InputForm = styled.input`
-  border: 1px solid rgba(111, 0, 163, 0.5);
-  border-radius: 4px;
-  height: 35px;
-  padding-left: 10px; /* Adds 10px of space at the start of the input */
-  margin-bottom: 10px;
-  width: 300px;
-
-  &:hover {
-    background-color: rgb(220, 198, 247);
-  }
+const Split = styled.div`
+  display: inline;
+  margin: 0 5px;
 `;
 
 const StyleButton = styled.button`
@@ -87,10 +79,18 @@ const StyleButton = styled.button`
 `;
 
 // React Component
-const AddCampaignModel = ({ groupData, isOpen, close, selectOptions }) => {
+const AddCampaignModel = ({
+  groupData,
+  msgData,
+  isOpen,
+  close,
+  selectOptions
+}) => {
   const [selectedOption, setSelectedOption] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
-  const [inputValue, setINputChange] = useState("");
+  const [selectedTime, setSelectedTime] = useState("10:00");
+  const [selectedMsg, setSelectedMsg] = useState("");
+  const [selectedHour, setSelectedHour] = useState(9);
+  const [selectedMinute, setSelectedMinute] = useState(0);
 
   if (!isOpen) return null;
 
@@ -98,12 +98,16 @@ const AddCampaignModel = ({ groupData, isOpen, close, selectOptions }) => {
     setSelectedOption(e.target.value);
   };
 
-  const handleTimeChange = e => {
-    setSelectedTime(e.target.value);
+  const handleMsgSelectChange = e => {
+    setSelectedMsg(e.target.value);
   };
 
-  const handleInputChange = e => {
-    setINputChange(e.target.value);
+  const handleHourValue = e => {
+    setSelectedHour(e.target.value);
+  };
+
+  const handleselectedMinute = e => {
+    setSelectedMinute(e.target.value);
   };
 
   const setCampaign = () => {
@@ -111,16 +115,16 @@ const AddCampaignModel = ({ groupData, isOpen, close, selectOptions }) => {
       alert("Select Group Name.");
       return;
     }
-    if (selectedTime === "") {
-      alert("Select Time.");
-      return;
-    }
-    if (inputValue === "") {
-      alert("Input SMS");
+    if (selectedMsg === "" || selectedOption === "default") {
+      alert("Select SMS");
       return;
     }
 
-    selectOptions({ selectedOption, selectedTime, inputValue });
+    const selectedTime = `${String(selectedHour).padStart(2, "0")}:${String(
+      selectedMinute
+    ).padStart(2, "0")}`;
+
+    selectOptions({ selectedOption, selectedTime, selectedMsg });
   };
 
   return (
@@ -142,23 +146,39 @@ const AddCampaignModel = ({ groupData, isOpen, close, selectOptions }) => {
             )}
           </Select>
         </div>
-
-        <div>
+        <div style={{ width: "98%" }}>
           <Label htmlFor="timeSelect">Set Send SMS Time</Label>
-          <TimeInput
-            id="timeSelect"
-            type="time"
-            value={selectedTime}
-            onChange={handleTimeChange}
-          />
+          <TimeSelect value={selectedHour} onChange={handleHourValue}>
+            {Array.from({ length: 24 }, (_, index) =>
+              <option key={index} value={index}>
+                {index}
+              </option>
+            )}
+          </TimeSelect>
+          <Split>:</Split>
+          <TimeSelect value={selectedMinute} onChange={handleselectedMinute}>
+            {Array.from({ length: 60 }, (_, index) =>
+              <option key={index} value={index}>
+                {index}
+              </option>
+            )}
+          </TimeSelect>
         </div>
+
         <div style={{ width: "300px" }}>
-          <Label htmlFor="SMS">Input SMS.</Label>
-          <InputForm
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder="Input SMS..."
-          />
+          <Label htmlFor="SMS">Choose SMS Template.</Label>
+          <Select
+            id="comboBox"
+            value={selectedMsg}
+            onChange={handleMsgSelectChange}
+          >
+            <option value="default">-- Select --</option>
+            {msgData.map(row =>
+              <option value={row.msg} key={row.id}>
+                {row.msg}
+              </option>
+            )}
+          </Select>
         </div>
         <div style={{ display: "inline", width: "85%" }}>
           <StyleButton onClick={setCampaign}>Add Campaign</StyleButton>

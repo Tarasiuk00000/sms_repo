@@ -2,6 +2,14 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchImg from "../../Assects/search.png";
 
+const breakpoints = {
+  mobileS: "320px",
+  mobile: "480px",
+  tablet: "768px",
+  desktop: "1024px",
+  laptop: "1440px"
+};
+
 const SearchForm = styled.input`
   border: 1px solid rgba(111, 0, 163, 0.5);
   border-radius: 5px;
@@ -11,13 +19,19 @@ const SearchForm = styled.input`
   background-position: 95% center; /* Position the image inside the input */
   background-size: 30px 30px; /* Set the size of the image */
   margin: 1% 0.5%;
-  width: 13.15%;
+  width: 24.5%;
   height: 35px;
   position: absolute;
   padding-left: 10px; /* Adds 10px of space at the start of the input */
 
   &:hover {
     background-color: rgb(220, 198, 247);
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 85%;
+    margin-top: 18px;
+    margin-left: 5px;
   }
 `;
 

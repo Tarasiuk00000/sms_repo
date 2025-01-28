@@ -79,7 +79,6 @@ const AddButton = styled.button`
   }
 
   @media (max-width: ${breakpoints.mobileS}) {
-    margin-left: 120px;
   }
 `;
 

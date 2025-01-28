@@ -2,9 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const Tab = styled.div`
-  height: 400px;
-  margin-top: 73px;
-  width: 68%;
+  height: auto;
+  width: 55%;
   position: absolute;
   display: flex;
   flex-direction: column; /* Ensures items stack vertically */
@@ -30,7 +29,7 @@ const Button = styled.button`
   border-radius: 10px;
   margin-top: 2px;
   margin-left: 5%;
-  margin-right: 5%;
+  margin-right: 0%;
 
   background-color: ${props =>
     props.index === 1 ? "rgba(0, 255, 85, 0.1)" : "rgba(0, 187, 255, 0.1)"};

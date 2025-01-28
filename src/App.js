@@ -7,6 +7,7 @@ import SMS from "./Pages/Sms";
 import Calls from "./Pages/Calls";
 import Schedule from "./Pages/Schedule";
 import Setting from "./Pages/Setting";
+import Campaignstatus from "./Pages/Campaign";
 
 const breakpoints = {
   mobileS: "320px",
@@ -65,6 +66,8 @@ function App() {
       case 4:
         return <Schedule />;
       case 5:
+        return <Campaignstatus />;
+      case 6:
         return <Setting />;
     }
   };

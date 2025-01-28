@@ -59,6 +59,7 @@ const Setting = () => {
     fetchBlockData();
 
     const fetchAccountInform = async () => {
+      //alert(process.env.REACT_APP_API + "/api/account/information/get");
       try {
         // Send a GET request to the backend when the site loads
         const response = await axios.post(
